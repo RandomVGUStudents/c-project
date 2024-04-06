@@ -91,3 +91,14 @@ DON'T SKIP THIS STEP. I learned it the hard way.
 ### Pull request
 After you have done a good milestone in your own fork, in the main page there will be a button to open a pull request. A pull request will open a discussion between all members before applying it to the main repository.
 
+![Open a new PR](./images/gh_pr.png "When there are new commits on your repo, you can open a PR to apply it to the upstream.")
+
+Click the green button.
+
+![Checking diff](./images/gh_pr_diff.png "You can review all your changes.")
+
+Another one.
+
+![Write description](./images/gh_pr_create.png "You can write a description about what's new in your code. You can assign people to work together, add labels, etc.")
+
+Another one.
