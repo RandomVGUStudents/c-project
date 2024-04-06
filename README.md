@@ -6,6 +6,12 @@ By the way, everything related to the project will be available in the Projects 
 # First thing to do
 Hit the fork button. This will make a copy of the repo. From now on, you will work on your own fork.
 
+![Fork button](./images/gh_fork.png "Click it!")
+
+![Fork page](./images/gh_fork2.png "Just leave everything as default and click Create fork.")
+
+Click the "Create fork" button
+
 # Working with Git in VSCode
 <table>
 <tr>
@@ -55,9 +61,14 @@ If you can't use your own machine because of ~~skill issue~~ some reasons, or yo
 1. Click the "Connect to..." line, just below "Clone this repository..."
 2. Select "GitHub Codespaces", and it will install an extension for you.
 3. Login to your GitHub account.
-4. You are good to go!
+4. If there is no Codespaces, just create a new one
 
-For this part, I don't know what will happen if multiple people connect to an instance at the same time, I will try this later. For now, you have two options to start working with the repository.
+![Create new Codespaces](./images/vsc_codespaces.png)
+![Choose repo for Codespaces](./images/vsc_codespaces_repo.png "Just press Enter")
+![Choose branch of the repo](./images/vsc_codespaces_branch.png "Just press Enter")
+![Choose instance type](./images/vsc_codespaces_type.png "Just press Enter")
+
+5. You are good to go!
 
 ## Working
 
@@ -66,7 +77,7 @@ Okay, you can see a big "Commit" button here.
 
 ![VSCode Git page](./images/vsc_git.png "Don't forget to push afterwards lol.")
 
-What it does it "commit" (temporarily save) everything you have done since the last "pull" (will be explained below).
+What it does it "commit" (temporarily save) everything you have done.
 
 Oh, I mean the files are still saved on your machine when you save or Ctrl+S or something, but they will only live in your machine. This step will get your work uploaded to the Internet.
 
