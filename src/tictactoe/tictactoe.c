@@ -195,7 +195,7 @@ void Draw(void) {
             draw(currentTurn, hoverX, hoverY, 1);
         }
     }
-    drawState();
+
 
     if (gameOver) {
         drawResult(window, gameState());

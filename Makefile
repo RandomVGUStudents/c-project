@@ -5,12 +5,12 @@ PROJECT_NAME = games
 SRC_FILES = \
 			src/main.c \
 			src/utils/raylibUtils.c \
-			src/tictactoe-raylib/tictactoe.c \
+			src/minesweeper/minesweeper.c \
 
 # Header files (.h)
 INC_FILES = \
 			src/utls/raylibUtils.h \
-			src/tictactoe-raylib/tictactoe.h \
+			src/minesweeper/minesweeper.h \
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -std=c11 -lraylib -lm

@@ -1,9 +1,10 @@
-#include "tictactoe-raylib/tictactoe.h"
+//#include "tictactoe/tictactoe.h"
+#include "minesweeper/minesweeper.h"
 
 int main(int argv, char** args)
 {
     struct WindowAttr window = {
-        .title = "Tic Tac Toe",
+        .title = "Minesweeper",
         .width = 800,
         .height = 800,
         .fps = 60,
@@ -11,5 +12,7 @@ int main(int argv, char** args)
         .fg = BLACK
     };
 
-    return tictactoe(&window, 3, 3, 3);
+    //return tictactoe(&window, 3, 3, 3);
+    minesweeper(&window, 20, 20, 15);
+    return 0;
 }
