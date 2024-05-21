@@ -1,11 +1,15 @@
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include "utils/SDLUtils.h"
-#include "tictactoe/tictactoe.h"
+#include "tictactoe-raylib/tictactoe.h"
 
-int running = false;
-
-int main()
+int main(int argv, char** args)
 {
-    game_loop();
+    struct WindowAttr window = {
+        .title = "Tic Tac Toe",
+        .width = 800,
+        .height = 800,
+        .fps = 60,
+        .bg = RAYWHITE,
+        .fg = BLACK
+    };
+
+    return tictactoe(&window, 3, 3, 3);
 }
