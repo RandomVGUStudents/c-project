@@ -11,10 +11,10 @@ int inARow;
 Cell currentTurn;
 int gameOver;
 
-int initGame() {
+void initGame() {
     board = malloc(sizeX * sizeY * sizeof(char));
     if (!board) {
-        return -1;
+        return;
     }
     for (int i = 0; i < sizeX * sizeY; i++) {
         board[i] = EMPTY;
@@ -26,8 +26,6 @@ int initGame() {
     cellWidth = window->width / sizeX;
     cellHeight = window->height / sizeY;
     thickness = (cellWidth < cellHeight) ? cellWidth * TOTAL_THICKNESS : cellHeight * TOTAL_THICKNESS;
-
-    return 0;
 }
 
 void setBoard(int x, int y) {
@@ -209,8 +207,7 @@ int tictactoe(struct WindowAttr *w, int x, int y, int size) {
     sizeY = y;
     window = w;
     inARow = size;
-    initGame();
-    newGameWindow(w, Update, Draw);
+    newGameWindow(w, initGame, Update, Draw);
     return 0;
 }
 

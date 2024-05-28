@@ -10,6 +10,6 @@ struct WindowAttr {
     Color fg;
 };
 
-int newGameWindow(struct WindowAttr*, void (*Update)(void), void (*Draw)(void));
+int newGameWindow(struct WindowAttr*, void (*Init)(void), void (*Update)(void), void (*Draw)(void));
 
 void DrawTextCentered(const char *text, int x, int y, int fontSize, Color color);

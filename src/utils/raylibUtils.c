@@ -1,7 +1,10 @@
 #include "raylibUtils.h"
 
-int newGameWindow(struct WindowAttr *window, void (*Update)(void), void (*Draw)(void)) {
+int newGameWindow(struct WindowAttr *window, void (*Init)(void), void (*Update)(void), void (*Draw)(void)) {
     InitWindow(window->width, window->height, window->title);
+    if (Init) {
+        Init();
+    }
     SetTargetFPS(window->fps);
     while(!WindowShouldClose()) {
         BeginDrawing();
