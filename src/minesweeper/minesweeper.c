@@ -240,6 +240,7 @@ void minesweeper(struct WindowAttr *w, int r, int c, int m)
     row = r;
     column = c;
     mine_count = m;
+    
 
     InitWindow(window->width, window->height, "minesweeper");
     InitAudioDevice();
@@ -256,6 +257,7 @@ void minesweeper(struct WindowAttr *w, int r, int c, int m)
     bgm = LoadMusicStream("audio/New Tim Follin Song 2021.mp3");
     victory = LoadSound("audio/snd_dumbvictory.wav");
     death = LoadSound("audio/snd_damage.wav");
+    bool mute = false;
 
     grid = (tile**) malloc(row * sizeof(tile*));
     if (!grid) {
@@ -278,6 +280,10 @@ void minesweeper(struct WindowAttr *w, int r, int c, int m)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        if (mute)
+        {
+            StopMusicStream(bgm);
+        }
         UpdateMusicStream(bgm);
         switch (status)
         {
@@ -340,6 +346,10 @@ void minesweeper(struct WindowAttr *w, int r, int c, int m)
             {
                 init_grid();
                 status = gameplay;
+            }
+            if(IsKeyPressed(KEY_M))//mute game
+            {
+                mute=!mute;
             }
             EndDrawing();  
             break;
