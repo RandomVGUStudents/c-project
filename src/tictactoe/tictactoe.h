@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <raylib.h>
 #include "../utils/raylibUtils.h"
 
@@ -23,4 +24,4 @@ typedef enum {
     ONGOING = -2,
 } GameState;
 
-int tictactoe(struct WindowAttr *window, int x, int y, int size);
+void tictactoe(int x, int y, int size);

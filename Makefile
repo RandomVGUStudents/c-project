@@ -21,7 +21,8 @@ UTIL_FILES = \
 INC_FILES = \
 			src/utils/raylibUtils.h \
 			src/minesweeper/minesweeper.h \
-			src/tictactoe/tictactoe.h
+			src/tictactoe/tictactoe.h \
+			src/main.h
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -std=c11 -lraylib -lm

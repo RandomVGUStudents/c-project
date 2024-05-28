@@ -1,6 +1,6 @@
 #include "raylibUtils.h"
 
-int newGameWindow(struct WindowAttr *window, void (*Init)(void), void (*Update)(void), void (*Draw)(void)) {
+int newGameWindow(struct WindowAttr *window, void (*Init)(void), void (*Update)(void), void (*Draw)(void), void (*DeInit)(void)) {
     InitWindow(window->width, window->height, window->title);
     if (Init) {
         Init();
@@ -16,6 +16,9 @@ int newGameWindow(struct WindowAttr *window, void (*Init)(void), void (*Update)(
             (*Draw)();
         }
         EndDrawing();
+    }
+    if (DeInit) {
+        DeInit();
     }
     return 0;
 }
