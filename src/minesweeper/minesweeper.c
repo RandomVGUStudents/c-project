@@ -378,3 +378,17 @@ void minesweeper(struct WindowAttr *w, int r, int c, int m)
     return;
 }
 
+int main() {
+    struct WindowAttr window = {
+        .title = "Minesweeper",
+        .width = 800,
+        .height = 800,
+        .fps = 60,
+        .bg = RAYWHITE,
+        .fg = BLACK
+    };
+
+    minesweeper(&window, 10, 10, 10);
+
+    return 0;
+}
