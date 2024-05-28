@@ -6,8 +6,12 @@ int newGameWindow(struct WindowAttr *window, void (*Update)(void), void (*Draw)(
     while(!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(window->bg);
-        (*Update)();
-        (*Draw)();
+        if (Update) {
+            (*Update)();
+        }
+        if (Draw) {
+            (*Draw)();
+        }
         EndDrawing();
     }
     return 0;

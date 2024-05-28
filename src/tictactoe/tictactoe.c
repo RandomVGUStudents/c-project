@@ -188,6 +188,8 @@ void Draw(void) {
     int hoverX = GetMouseX() / cellWidth;
     int hoverY = GetMouseY() / cellHeight;
 
+    drawState();
+
     if (board[hoverY * sizeX + hoverX] == EMPTY && !gameOver) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             setBoard(hoverX, hoverY);
@@ -209,5 +211,20 @@ int tictactoe(struct WindowAttr *w, int x, int y, int size) {
     inARow = size;
     initGame();
     newGameWindow(w, Update, Draw);
+    return 0;
+}
+
+int main(int argc, char** argv) {
+    struct WindowAttr window = {
+        .title = "Tic Tac Toe",
+        .width = 600,
+        .height = 600,
+        .fps = 60,
+        .bg = RAYWHITE,
+        .fg = BLACK
+    };
+
+    tictactoe(&window, 3, 3, 3);
+
     return 0;
 }
