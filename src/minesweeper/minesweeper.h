@@ -4,6 +4,8 @@
 #include "../utils/myUtils.h"
 
 #define CELL_SIZE 30
+#define GOJO_SIZE 100
+#define BORDER_SIZE 5
 
 typedef enum {
     menu,

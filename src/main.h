@@ -19,9 +19,9 @@ const Rectangle ICON1 = {50, 350, 300, 300};
 const Rectangle ICON2 = {450, 350, 300, 300};
 const Rectangle TEXTBOX = {0, 60, 800, 80};
 const Rectangle SIZE_TEXTBOX = {550, 200, 200, 40};
-const Rectangle SIZE_TEXTBOX2 = {550, 260, 200, 20};
+const Rectangle SIZE_TEXTBOX2 = {550, 250, 200, 30};
 const Rectangle MINE_TEXTBOX = {550, 300, 200, 40};
-const Rectangle MINE_TEXTBOX2 = {550, 350, 200, 20};
+const Rectangle MINE_TEXTBOX2 = {550, 350, 200, 80};
 
 extern const Rectangle SLIDER;
 extern const Rectangle BACK_BTN;

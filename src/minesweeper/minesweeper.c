@@ -1,4 +1,5 @@
 #include "minesweeper.h"
+#include <raylib.h>
 
 Texture2D unopened_tile;
 Texture2D opened_tile;
@@ -26,6 +27,7 @@ bool mute = false;
 int row;
 int column;
 int mine_count;
+int flagged;
 
 void init_grid() { //initialize the grid
     for (int i = 0; i < row; i++) {
@@ -71,6 +73,12 @@ void init_grid() { //initialize the grid
 
 void draw_grid() {
     ClearBackground((Color){235, 235, 235, 255});
+    Rectangle total_mine = {(window.width + GOJO_SIZE) / 2.0 + BORDER_SIZE,
+        row * CELL_SIZE, (window.width - GOJO_SIZE) / 2.0 - BORDER_SIZE, GOJO_SIZE / 2.0 + BORDER_SIZE};
+    DrawTextCentered(TextFormat("Total mines: %d", mine_count), total_mine, 30, BLACK); //TODO
+    Rectangle flagged_count = {total_mine.x, total_mine.y + total_mine.height, total_mine.width, total_mine.height};
+    DrawTextCentered(TextFormat("Flagged count: %d", flagged), flagged_count, 30, BLACK); //TODO
+
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
             Rectangle source_rec = {0, 0, CELL_SIZE, CELL_SIZE};
@@ -158,6 +166,10 @@ void update_grid() {
     if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) { //flagging a tile
         if (!grid[x][y].is_opened) { 
             grid[x][y].is_flagged = !grid[x][y].is_flagged;
+            if (grid[x][y].is_flagged)
+                flagged++;
+            else
+                flagged--;
         }
     }
 }
@@ -175,9 +187,10 @@ void but_would_you_lose() { //check if you win or not
 }
 
 void draw_status(Texture2D gojo) {
-    DrawTextCentered(TextFormat("Total mines: %d", mine_count), (Rectangle) {0, 0, window.width * 1.6, row*CELL_SIZE+5}, 30, BLACK);
-    DrawTexture(gojo,(window.width-gojo.width)/2,row*CELL_SIZE+5,WHITE);
-    DrawRectangleLinesEx((Rectangle){(window.width-gojo.width-10)/2,row*CELL_SIZE,gojo.width+5,gojo.height+10},5,BLACK);
+    Rectangle gojo_box = {(window.width - GOJO_SIZE) / 2 - BORDER_SIZE,
+        row * CELL_SIZE, GOJO_SIZE + BORDER_SIZE * 2, GOJO_SIZE + BORDER_SIZE * 2};
+    DrawTexture(gojo, gojo_box.x + BORDER_SIZE, gojo_box.y + BORDER_SIZE, WHITE);
+    DrawRectangleLinesEx(gojo_box, BORDER_SIZE, BLACK);
 }
 
 void end_game(bool win) {
@@ -294,7 +307,7 @@ void DeInit() {
 void minesweeper(int r, int c, int m)
 {
     window.width = c * CELL_SIZE;
-    window.height = r * CELL_SIZE + 110;
+    window.height = r * CELL_SIZE + GOJO_SIZE + BORDER_SIZE * 2;
     row = r;
     column = c;
     mine_count = m;

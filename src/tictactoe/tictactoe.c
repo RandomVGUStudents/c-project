@@ -91,7 +91,7 @@ int drawResult(Cell winner) {
             break;
     }
 
-    DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height}, -max(-MAX_TEXT_SIZE, max(-window.width, -window.height) / 5), window.fg);
+    DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height}, TEXT_SIZE, window.fg);
     return 0;
 }
 

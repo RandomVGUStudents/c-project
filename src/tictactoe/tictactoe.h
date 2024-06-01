@@ -9,7 +9,7 @@
 #define TOTAL_PADDING 0.15
 #define X_COLOR MAROON
 #define O_COLOR SKYBLUE
-#define MAX_TEXT_SIZE 100
+#define TEXT_SIZE 100
 #define MAX_WINDOW_SIZE 1000
 
 typedef enum {

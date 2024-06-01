@@ -64,7 +64,7 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
         if (!IsMouseButtonDown(MOUSE_LEFT_BUTTON))
             inBounds = false;
 
-        DrawTextCentered(TextFormat("X = %d", xValue), SIZE_TEXTBOX2, 20, BLACK);
+        DrawTextCentered(TextFormat("X = %d", xValue), SIZE_TEXTBOX2, 40, BLACK);
         if (yValue == maxSize)
             unlocked = true;
         yValue = xValue;
@@ -73,7 +73,7 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
             setX = clamp(mouse.x, SLIDER.x, SLIDER.x + SLIDER.width - SLIDER_HANDLE_SIZE);
             setY = clamp(mouse.y, SLIDER.y, SLIDER.y + SLIDER.height - SLIDER_HANDLE_SIZE);
         }
-        DrawTextCentered(TextFormat("X = %d + %di", xValue, yValue), SIZE_TEXTBOX2, 20, BLACK);
+        DrawTextCentered(TextFormat("X = %d + %di", xValue, yValue), SIZE_TEXTBOX2, 40, BLACK);
     }
 
     if (selectedGame == GAME_MINESWEEPER) {
