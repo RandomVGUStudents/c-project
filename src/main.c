@@ -1,5 +1,4 @@
 #include "main.h"
-#include <raylib.h>
 
 Texture2D TicTacToe;
 Texture2D Minesweeper;
@@ -8,8 +7,10 @@ bool popUp = false;
 bool unlocked = false;
 bool inBounds = false;
 GameType selectedGame = GAME_NONE;
-int max = 30, min = 5;
-int setX = SLIDER_X, setY = SLIDER_Y;
+int setX = SLIDER.x, setY = SLIDER.y;
+int mineRatio = 0;
+int winCondition = 0;
+int frames = 0;
 
 void TextureInit() {
     TicTacToe = LoadTexture("assets/tictactoe.png");
@@ -25,65 +26,81 @@ void TextureInit() {
     }
 }
 
-void DrawSettingsPopup(Vector2 mouse) {
-    int offsetX = setX - SLIDER_X;
-    int offsetY = setY - SLIDER_Y;
-    int xValue = min + (offsetX * (max - min)) / (SLIDER_WIDTH - SLIDER_HANDLE_SIZE);
-    int yValue = min + (offsetY * (max - min)) / (SLIDER_HEIGHT - SLIDER_HANDLE_SIZE);
+void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
+    int offsetX = setX - SLIDER.x;
+    int offsetY = setY - SLIDER.y;
+    int xValue = minSize + (offsetX * (maxSize - minSize)) / (SLIDER.width - SLIDER_HANDLE_SIZE);
+    int yValue = minSize + (offsetY * (maxSize - minSize)) / (SLIDER.height - SLIDER_HANDLE_SIZE);
 
-    Rectangle sliderX = {SLIDER_X, SLIDER_Y, SLIDER_HANDLE_SIZE * offsetX * 0.1, SLIDER_HANDLE_SIZE};
-    Rectangle allowedArea = {SLIDER_X - 10, SLIDER_Y - 10, SLIDER_WIDTH + 20, SLIDER_HANDLE_SIZE + 20};
-    Rectangle sliderXY = {SLIDER_X, SLIDER_Y, SLIDER_WIDTH, SLIDER_HEIGHT};
-    Rectangle startBtn = {START_BTN_X, START_BTN_Y, START_BTN_WIDTH, START_BTN_HEIGHT};
+    Rectangle sliderX = {SLIDER.x, SLIDER.y, SLIDER.width, SLIDER_HANDLE_SIZE};
+    Rectangle allowedArea = {SLIDER.x - 10, SLIDER.y - 10, SLIDER.width + 20, SLIDER_HANDLE_SIZE + 20};
 
-    DrawRectangleLinesEx(unlocked ? sliderXY : sliderX, 5.0, BLACK);
-    DrawRectangleRec(startBtn, BLACK);
-    DrawTextCentered("Game Settings", 800, 200, 80, BLACK);
-    DrawTextCentered("Board size", 1300, 400, 40, BLACK);
-    DrawTextCentered("Start Game", 800, 1350, 20, RAYWHITE);
+    DrawRectangleLinesEx(unlocked ? SLIDER : sliderX, 5.0, BLACK);
+    DrawRectangleLinesEx(BACK_BTN, 5.0, BLACK);
+    DrawRectangleRec(START_BTN, BLACK);
+    DrawTextCentered("Game Settings", TEXTBOX, 80, BLACK);
+    DrawTextCentered("Board size", SIZE_TEXTBOX, 40, BLACK);
+    DrawTextCentered("Back", BACK_BTN, 20, BLACK);
+    DrawTextCentered("Start Game", START_BTN, 20, RAYWHITE);
+    DrawRectangle(setX, unlocked ? setY : SLIDER.y, SLIDER_HANDLE_SIZE, SLIDER_HANDLE_SIZE, BLACK);
 
-    if (!unlocked) {
-        if (CheckCollisionPointRec(mouse, allowedArea)) {
-            inBounds = true;
+    if (CheckCollisionPointRec(mouse, BACK_BTN)) {
+        DrawRectangleRec(BACK_BTN, Fade(BLACK, 0.5));
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            selectedGame = GAME_NONE;
+            popUp = false;
         }
-
-        printf("%b\n", inBounds);
-
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && inBounds) {
-            setX = CLAMP(mouse.x, SLIDER_X, SLIDER_X + SLIDER_WIDTH - SLIDER_HANDLE_SIZE);
-            setY = CLAMP(mouse.y, SLIDER_Y, SLIDER_Y + SLIDER_HEIGHT - SLIDER_HANDLE_SIZE);
-        }
-
-        if (!IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-            inBounds = false;
-        }
-
-        DrawTextCentered(TextFormat("X = %d", xValue), 1300, 500, 20, BLACK);
-        if (yValue == max) {
-            unlocked = true;
-        }
-    } else {
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-            setX = CLAMP(mouse.x, SLIDER_X, SLIDER_X + SLIDER_WIDTH - SLIDER_HANDLE_SIZE);
-            setY = CLAMP(mouse.y, SLIDER_Y, SLIDER_Y + SLIDER_HEIGHT - SLIDER_HANDLE_SIZE);
-        }
-        DrawTextCentered(TextFormat("X = %d + %di", xValue, yValue), 1300, 500, 20, BLACK);
     }
 
-    DrawRectangle(setX, unlocked ? setY : SLIDER_Y, SLIDER_HANDLE_SIZE, SLIDER_HANDLE_SIZE, BLACK);
+    if (!unlocked) {
+        if (CheckCollisionPointRec(mouse, allowedArea))
+            inBounds = true;
 
-    if (CheckCollisionPointRec(mouse, startBtn)) {
-        DrawRectangle(START_BTN_X, START_BTN_Y, START_BTN_WIDTH, START_BTN_HEIGHT, Fade(RAYWHITE, 0.5));
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && inBounds) {
+            setX = clamp(mouse.x, SLIDER.x, SLIDER.x + SLIDER.width - SLIDER_HANDLE_SIZE);
+            setY = clamp(mouse.y, SLIDER.y, SLIDER.y + SLIDER.height - SLIDER_HANDLE_SIZE);
+        }
+
+        if (!IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+            inBounds = false;
+
+        DrawTextCentered(TextFormat("X = %d", xValue), SIZE_TEXTBOX2, 20, BLACK);
+        if (yValue == maxSize)
+            unlocked = true;
+        yValue = xValue;
+    } else {
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            setX = clamp(mouse.x, SLIDER.x, SLIDER.x + SLIDER.width - SLIDER_HANDLE_SIZE);
+            setY = clamp(mouse.y, SLIDER.y, SLIDER.y + SLIDER.height - SLIDER_HANDLE_SIZE);
+        }
+        DrawTextCentered(TextFormat("X = %d + %di", xValue, yValue), SIZE_TEXTBOX2, 20, BLACK);
+    }
+
+    if (selectedGame == GAME_MINESWEEPER) {
+        if (frames % 10 == 0) {
+            mineRatio = GetRandomValue(10, 40);
+            frames = 0;
+        }
+
+        frames++;
+
+        DrawTextCentered("Mine ratio", MINE_TEXTBOX, 40, BLACK);
+        DrawTextCentered(TextFormat("%d", mineRatio), MINE_TEXTBOX2, 80, BLACK);
+    } else {
+        winCondition = (int) clamp(max(xValue, yValue) / 1.5, 3, 5);
+        DrawTextCentered("To win", MINE_TEXTBOX, 40, BLACK);
+        DrawTextCentered(TextFormat("%d", winCondition), MINE_TEXTBOX2, 80, BLACK);
+    }
+
+    if (CheckCollisionPointRec(mouse, START_BTN)) {
+        DrawRectangleRec(START_BTN, Fade(RAYWHITE, 0.5));
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            if (!unlocked) {
-                yValue = xValue;
-            }
             switch (selectedGame) {
                 case GAME_MINESWEEPER:
-                    system(TextFormat("./minesweeper %d %d %d", xValue, yValue, 10));
+                    system(TextFormat("./minesweeper %d %d %d", xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
                     break;
                 case GAME_TICTACTOE:
-                    system(TextFormat("./tictactoe %d %d %d", xValue, yValue, (int)CLAMP(MAX(xValue, yValue) / 1.5, 3, 5)));
+                    system(TextFormat("./tictactoe %d %d %d", xValue, yValue, winCondition));
                     break;
                 default:
                     break;
@@ -96,21 +113,20 @@ void DrawSettingsPopup(Vector2 mouse) {
 }
 
 void DrawGameSelection(Vector2 mouse) {
-    Rectangle icon1 = {ICON1_X, ICON1_Y, ICON1_WIDTH, ICON1_HEIGHT};
-    Rectangle icon2 = {ICON2_X, ICON2_Y, ICON2_WIDTH, ICON2_HEIGHT};
+    Rectangle textBox = {0, 160, 800, 80};
 
-    DrawTexture(Minesweeper, ICON1_X, ICON1_Y, WHITE);
-    DrawTexture(TicTacToe, ICON2_X, ICON2_Y, WHITE);
-    DrawTextCentered("Choose a game", 800, 400, 80, BLACK);
+    DrawTexture(Minesweeper, ICON1.x, ICON1.y, WHITE);
+    DrawTexture(TicTacToe, ICON2.x, ICON2.y, WHITE);
+    DrawTextCentered("Choose a game", textBox, 80, BLACK);
 
-    if (CheckCollisionPointRec(mouse, icon1)) {
-        DrawRectangleRec(icon1, Fade(RAYWHITE, 0.5));
+    if (CheckCollisionPointRec(mouse, ICON1)) {
+        DrawRectangleRec(ICON1, Fade(RAYWHITE, 0.5));
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             selectedGame = GAME_MINESWEEPER;
             popUp = true;
         }
-    } else if (CheckCollisionPointRec(mouse, icon2)) {
-        DrawRectangleRec(icon2, Fade(RAYWHITE, 0.5));
+    } else if (CheckCollisionPointRec(mouse, ICON2)) {
+        DrawRectangleRec(ICON2, Fade(RAYWHITE, 0.5));
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             selectedGame = GAME_TICTACTOE;
             popUp = true;
@@ -121,11 +137,13 @@ void DrawGameSelection(Vector2 mouse) {
 void UI() {
     Vector2 mouse = GetMousePosition();
 
-    if (popUp) {
-        DrawSettingsPopup(mouse);
-    } else {
+    if (popUp)
+        if (selectedGame == GAME_MINESWEEPER)
+            DrawSettingsPopup(mouse, 30, 10);
+        else
+            DrawSettingsPopup(mouse, 20, 3);
+    else
         DrawGameSelection(mouse);
-    }
 }
 
 void DeInit() {

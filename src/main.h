@@ -1,33 +1,30 @@
-#include "utils/raylibUtils.h"
+#include "utils/myUtils.h"
 #include <raylib.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-#define MAX(a, b) ((a > b) ? a : b)
-#define CLAMP(x, min, max) ((x < min) ? min : ((x > max) ? max : x))
-
-// Constants
-#define SLIDER_X 100
-#define SLIDER_Y 200
-#define SLIDER_WIDTH 400
-#define SLIDER_HEIGHT 400
-#define START_BTN_X 300
-#define START_BTN_Y 650
-#define START_BTN_WIDTH 200
-#define START_BTN_HEIGHT 50
-#define ICON1_X 50
-#define ICON1_Y 350
-#define ICON1_WIDTH 300
-#define ICON1_HEIGHT 300
-#define ICON2_X 450
-#define ICON2_Y 350
-#define ICON2_WIDTH 300
-#define ICON2_HEIGHT 300
-#define SLIDER_HANDLE_SIZE 10
+#define SLIDER_HANDLE_SIZE 20
 
 typedef enum {
     GAME_NONE,
     GAME_MINESWEEPER,
     GAME_TICTACTOE
 } GameType;
+
+const Rectangle SLIDER = {100, 200, 400, 400};
+const Rectangle BACK_BTN = {175, 650, 200, 50};
+const Rectangle START_BTN = {425, 650, 200, 50};
+const Rectangle ICON1 = {50, 350, 300, 300};
+const Rectangle ICON2 = {450, 350, 300, 300};
+const Rectangle TEXTBOX = {0, 60, 800, 80};
+const Rectangle SIZE_TEXTBOX = {550, 200, 200, 40};
+const Rectangle SIZE_TEXTBOX2 = {550, 260, 200, 20};
+const Rectangle MINE_TEXTBOX = {550, 300, 200, 40};
+const Rectangle MINE_TEXTBOX2 = {550, 350, 200, 20};
+
+extern const Rectangle SLIDER;
+extern const Rectangle BACK_BTN;
+extern const Rectangle START_BTN;
+extern const Rectangle ICON1;
+extern const Rectangle ICON2;

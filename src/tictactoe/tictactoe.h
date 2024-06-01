@@ -3,13 +3,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <raylib.h>
-#include "../utils/raylibUtils.h"
+#include "../utils/myUtils.h"
 
 #define TOTAL_THICKNESS 0.05
 #define TOTAL_PADDING 0.15
 #define X_COLOR MAROON
 #define O_COLOR SKYBLUE
-#define TEXT_SIZE 100
+#define MAX_TEXT_SIZE 100
+#define MAX_WINDOW_SIZE 1000
 
 typedef enum {
     X = 1,

@@ -2,8 +2,6 @@
 
 struct WindowAttr window = {
     .title = "Tic Tac Toe",
-    .width = 1000,
-    .height = 1000,
     .fps = 60,
     .bg = RAYWHITE,
     .fg = BLACK
@@ -11,10 +9,9 @@ struct WindowAttr window = {
 char *board;
 int sizeX;
 int sizeY;
-int cellWidth;
-int cellHeight;
 int thickness;
 int inARow;
+int cellSize;
 Cell currentTurn;
 int gameOver;
 
@@ -30,9 +27,7 @@ void initGame() {
     gameOver = 0;
     currentTurn = X;
 
-    cellWidth = window.width / sizeX;
-    cellHeight = window.height / sizeY;
-    thickness = (cellWidth < cellHeight) ? cellWidth * TOTAL_THICKNESS : cellHeight * TOTAL_THICKNESS;
+    thickness = cellSize * TOTAL_THICKNESS;
 }
 
 void setBoard(int x, int y) {
@@ -42,12 +37,12 @@ void setBoard(int x, int y) {
 
 void draw(Cell player, int x, int y, int hover) {
     if (player == X) {
-        int padding = (cellWidth < cellHeight) ? cellWidth * TOTAL_PADDING : cellHeight * TOTAL_PADDING;
+        int padding = cellSize * TOTAL_PADDING;
 
-        Vector2 start1 = {x * cellWidth + padding, y * cellHeight + padding};
-        Vector2 end1 = {(x + 1) * cellWidth - padding, (y + 1) * cellHeight - padding};
-        Vector2 start2 = {(x + 1) * cellWidth - padding, y * cellHeight + padding};
-        Vector2 end2 = {x * cellWidth + padding, (y + 1) * cellHeight - padding};
+        Vector2 start1 = {x * cellSize + padding, y * cellSize + padding};
+        Vector2 end1 = {(x + 1) * cellSize - padding, (y + 1) * cellSize - padding};
+        Vector2 start2 = {(x + 1) * cellSize - padding, y * cellSize + padding};
+        Vector2 end2 = {x * cellSize + padding, (y + 1) * cellSize - padding};
 
         Color drawColor = X_COLOR;
         if (hover) {
@@ -57,7 +52,7 @@ void draw(Cell player, int x, int y, int hover) {
         DrawLineEx(start1, end1, thickness, drawColor);
         DrawLineEx(start2, end2, thickness, drawColor);
     } else if (player == O) {
-        int radius = (cellWidth < cellHeight) ? cellWidth / 2 : cellHeight / 2;
+        int radius = cellSize / 2;
 
         Color drawColor = O_COLOR;
         if (hover) {
@@ -65,7 +60,7 @@ void draw(Cell player, int x, int y, int hover) {
         }
 
         for (int i = 0; i < thickness; i++) {
-            DrawCircleLines(x * cellWidth + cellWidth / 2, y * cellHeight + cellHeight / 2, radius - i - radius * TOTAL_PADDING, drawColor);
+            DrawCircleLines(x * cellSize + cellSize / 2, y * cellSize + cellSize / 2, radius - i - radius * TOTAL_PADDING, drawColor);
         }
     }
 }
@@ -78,10 +73,10 @@ void drawState() {
     }
 }
 
-int drawResult(struct WindowAttr *window, Cell winner) {
-    Color color = window->bg;
+int drawResult(Cell winner) {
+    Color color = window.bg;
     color = ColorAlpha(color, 0.75);
-    DrawRectangle(0, 0, window->width, window->height, color);
+    DrawRectangle(0, 0, window.width, window.height, color);
     char* text;
 
     switch (winner) {
@@ -96,7 +91,7 @@ int drawResult(struct WindowAttr *window, Cell winner) {
             break;
     }
 
-    DrawTextCentered(text, window->width, window->height, TEXT_SIZE, window->fg);
+    DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height}, -max(-MAX_TEXT_SIZE, max(-window.width, -window.height) / 5), window.fg);
     return 0;
 }
 
@@ -183,15 +178,15 @@ void Update(void) {
 
 void Draw(void) {
     for (int i = 1; i < sizeX; i++) {
-        DrawRectangle(i * cellWidth - (thickness >> 1), 0, thickness, window.height, window.fg);
+        DrawRectangle(i * cellSize - (thickness >> 1), 0, thickness, window.height, window.fg);
     }
 
     for (int i = 1; i < sizeY; i++) {
-        DrawRectangle(0, i * cellHeight - (thickness >> 1), window.width, thickness, window.fg);
+        DrawRectangle(0, i * cellSize - (thickness >> 1), window.width, thickness, window.fg);
     }
 
-    int hoverX = GetMouseX() / cellWidth;
-    int hoverY = GetMouseY() / cellHeight;
+    int hoverX = GetMouseX() / cellSize;
+    int hoverY = GetMouseY() / cellSize;
 
     drawState();
 
@@ -205,7 +200,7 @@ void Draw(void) {
 
 
     if (gameOver) {
-        drawResult(&window, gameState());
+        drawResult(gameState());
     }
 }
 
@@ -217,6 +212,9 @@ void tictactoe(int x, int y, int size) {
     sizeX = x;
     sizeY = y;
     inARow = size;
+    cellSize = MAX_WINDOW_SIZE / max(sizeX, sizeY);
+    window.width = sizeX * cellSize;
+    window.height = sizeY * cellSize;
     newGameWindow(&window, initGame, Update, Draw, DeInit);
 }
 

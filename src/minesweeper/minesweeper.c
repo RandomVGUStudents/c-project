@@ -175,6 +175,7 @@ void but_would_you_lose() { //check if you win or not
 }
 
 void draw_status(Texture2D gojo) {
+    DrawTextCentered(TextFormat("Total mines: %d", mine_count), (Rectangle) {0, 0, window.width * 1.6, row*CELL_SIZE+5}, 30, BLACK);
     DrawTexture(gojo,(window.width-gojo.width)/2,row*CELL_SIZE+5,WHITE);
     DrawRectangleLinesEx((Rectangle){(window.width-gojo.width-10)/2,row*CELL_SIZE,gojo.width+5,gojo.height+10},5,BLACK);
 }
@@ -183,7 +184,7 @@ void end_game(bool win) {
     draw_status(win ? gojo_win : gojo_lose);
     draw_grid();
     DrawRectangle(0, 0, window.width, window.height, ColorAlpha(WHITE, 0.5));
-    DrawTextCentered(TextFormat("You %s, press R for reset", win ? "won" : "lost"), window.width, window.height, 30, BLACK);
+    DrawTextCentered(TextFormat("You %s, press R for reset", win ? "won" : "lost"), (Rectangle) {0, 0, window.width, window.height}, 30, BLACK);
     if (IsKeyPressed(KEY_R)) {
         init_grid();
         status = gameplay;
@@ -260,7 +261,7 @@ void Update() {
         case menu:    
             ClearBackground(WHITE);
             DrawTextureEx(logo, (Vector2) {(window.width - logo.width) / 2, (window.height - 450) / 2}, 0, 1, WHITE);
-            DrawTextCentered("press ENTER to start game", window.width, window.height, 30, BLACK);
+            DrawTextCentered("press ENTER to start game", (Rectangle) {0, 0, window.width, window.height}, 30, BLACK);
             if (IsKeyPressed(KEY_ENTER))
             {
                 init_grid();
