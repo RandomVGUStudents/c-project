@@ -1,3 +1,6 @@
+#ifndef MINESWEEPER_H
+#define MINESWEEPER_H
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <raylib.h>
@@ -22,4 +25,6 @@ typedef struct tile {
     Rectangle tile_rect;
 } tile;
 
-void minesweeper(int row, int column, int mine_count);
+void minesweeper(struct WindowAttr *window, int row, int column, int mine_count);
+
+#endif
