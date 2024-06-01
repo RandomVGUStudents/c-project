@@ -15,13 +15,14 @@ SRC_FILES_TICTACTOE = \
 
 # Utility source files
 UTIL_FILES = \
-			src/utils/raylibUtils.c
+			src/utils/myUtils.c
 
 # Header files
 INC_FILES = \
-			src/utils/raylibUtils.h \
+			src/utils/myUtils.h \
 			src/minesweeper/minesweeper.h \
-			src/tictactoe/tictactoe.h
+			src/tictactoe/tictactoe.h \
+			src/main.h
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -std=c11 -lraylib -lm

@@ -1,3 +1,6 @@
 *.o
 .vscode/
 games
+tictactoe
+ui
+minesweeper
