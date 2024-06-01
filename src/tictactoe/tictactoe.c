@@ -1,13 +1,6 @@
 #include "tictactoe.h"
 
-struct WindowAttr window = {
-    .title = "Tic Tac Toe",
-    .width = 1000,
-    .height = 1000,
-    .fps = 60,
-    .bg = RAYWHITE,
-    .fg = BLACK
-};
+struct WindowAttr *window;
 char *board;
 int sizeX;
 int sizeY;
@@ -18,10 +11,10 @@ int inARow;
 Cell currentTurn;
 int gameOver;
 
-void initGame() {
+int initGame() {
     board = malloc(sizeX * sizeY * sizeof(char));
     if (!board) {
-        return;
+        return -1;
     }
     for (int i = 0; i < sizeX * sizeY; i++) {
         board[i] = EMPTY;
@@ -30,9 +23,11 @@ void initGame() {
     gameOver = 0;
     currentTurn = X;
 
-    cellWidth = window.width / sizeX;
-    cellHeight = window.height / sizeY;
+    cellWidth = window->width / sizeX;
+    cellHeight = window->height / sizeY;
     thickness = (cellWidth < cellHeight) ? cellWidth * TOTAL_THICKNESS : cellHeight * TOTAL_THICKNESS;
+
+    return 0;
 }
 
 void setBoard(int x, int y) {
@@ -183,11 +178,11 @@ void Update(void) {
 
 void Draw(void) {
     for (int i = 1; i < sizeX; i++) {
-        DrawRectangle(i * cellWidth - (thickness >> 1), 0, thickness, window.height, window.fg);
+        DrawRectangle(i * cellWidth - (thickness >> 1), 0, thickness, window->height, window->fg);
     }
 
     for (int i = 1; i < sizeY; i++) {
-        DrawRectangle(0, i * cellHeight - (thickness >> 1), window.width, thickness, window.fg);
+        DrawRectangle(0, i * cellHeight - (thickness >> 1), window->width, thickness, window->fg);
     }
 
     int hoverX = GetMouseX() / cellWidth;
@@ -205,33 +200,31 @@ void Draw(void) {
 
 
     if (gameOver) {
-        drawResult(&window, gameState());
+        drawResult(window, gameState());
     }
 }
 
-void DeInit(void) {
-    free(board);
-}
-
-void tictactoe(int x, int y, int size) {
+int tictactoe(struct WindowAttr *w, int x, int y, int size) {
     sizeX = x;
     sizeY = y;
+    window = w;
     inARow = size;
-    newGameWindow(&window, initGame, Update, Draw, DeInit);
+    initGame();
+    newGameWindow(w, Update, Draw);
+    return 0;
 }
 
 int main(int argc, char** argv) {
-    if (argc != 4) {
-        fprintf(stderr, "Error: Please launch the game with the Game Selector UI.\n");
-        return EXIT_FAILURE;
-    }
+    struct WindowAttr window = {
+        .title = "Tic Tac Toe",
+        .width = 600,
+        .height = 600,
+        .fps = 60,
+        .bg = RAYWHITE,
+        .fg = BLACK
+    };
 
-    int arg1 = atoi(argv[1]);
-    int arg2 = atoi(argv[2]);
-    int arg3 = atoi(argv[3]);
-
-
-    tictactoe(arg1, arg2, arg3);
+    tictactoe(&window, 3, 3, 3);
 
     return 0;
 }
