@@ -4,7 +4,7 @@
 
 1. Click the green button "<> Code"
 2. Click "Download ZIP"
-3. Extract zip file and run `gameui.exe`
+3. Extract zip file and run `game.exe`
 4. A small (weird) surprise awaits you in the UI (size slider)
 
 ### Linux
@@ -18,6 +18,8 @@ make && ./gameui
 ## 3D Animation
 
 I made a 3D animation for no reason.
+
+[![YouTube](http://i.ytimg.com/vi/XOAA-efwiso/hqdefault.jpg)](https://www.youtube.com/watch?v=XOAA-efwiso)
 
 ## More information
 
