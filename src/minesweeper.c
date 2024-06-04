@@ -318,7 +318,7 @@ void minesweeper(int r, int c, int m)
 int main(int argc, char** argv) {
 
     if (argc != 4) {
-        fprintf(stderr, "Error: Please launch the game with the Game Selector UI.\n");
+        fprintf(stderr, "Error: Please launch the game with the Game UI.\n");
         return EXIT_FAILURE;
     }
 

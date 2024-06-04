@@ -138,43 +138,57 @@ bool areYouWinningSon(Cell player) {
         for (int j = 0; j < sizeY; j++) {
             if (board[j * sizeX + i] == player) {
                 int count = 1;
-                for (int k = 1; k < inARow; k++) {
-                    if (i + k < sizeX && board[j * sizeX + i + k] == player) {
-                        count++;
+                bool case1 = i + inARow <= sizeX + 1;
+                bool case2 = j + inARow <= sizeY + 1;
+                bool case3 = i - inARow >= -1;
+
+                if (case1) {
+                    for (int k = 1; k < inARow; k++) {
+                        if (board[j * sizeX + i + k] == player) {
+                            count++;
+                        }
                     }
-                }
-                if (count == inARow) {
-                    return true;
+
+                    if (count == inARow) {
+                        return true;
+                    }
                 }
 
-                count = 1;
-                for (int k = 1; k < inARow; k++) {
-                    if (j + k < sizeY && board[(j + k) * sizeX + i] == player) {
-                        count++;
+                if (case2) {
+                    count = 1;
+                    for (int k = 1; k < inARow; k++) {
+                        if (board[(j + k) * sizeX + i] == player) {
+                            count++;
+                        }
                     }
-                }
-                if (count == inARow) {
-                    return true;
-                }
+                    if (count == inARow) {
+                        return true;
+                    }
 
-                count = 1;
-                for (int k = 1; k < inARow; k++) {
-                    if (i + k < sizeX && j + k < sizeY && board[(j + k) * sizeX + i + k] == player) {
-                        count++;
+                    if (case1) {
+                        count = 1;
+                        for (int k = 1; k < inARow; k++) {
+                            if (board[(j + k) * sizeX + i + k] == player) {
+                                count++;
+                            }
+                        }
+                        if (count == inARow) {
+                            return true;
+                        }
                     }
-                }
-                if (count == inARow) {
-                    return true;
-                }
 
-                count = 1;
-                for (int k = 1; k < inARow; k++) {
-                    if (i - k >= 0 && j + k < sizeY && board[(j + k) * sizeX + i - k] == player) {
-                        count++;
+                    if (case3) {
+                        count = 1;
+                        for (int k = 1; k < inARow; k++) {
+                            if (board[(j + k) * sizeX + i - k] == player) {
+                                count++;
+                            }
+                        }
+                        if (count == inARow) {
+                            return true;
+                        }
+
                     }
-                }
-                if (count == inARow) {
-                    return true;
                 }
             }
         }
@@ -261,7 +275,7 @@ void tictactoe(int x, int y, int size) {
 
 int main(int argc, char** argv) {
     if (argc != 4) {
-        fprintf(stderr, "Error: Please launch the game with the Game Selector UI.\n");
+        fprintf(stderr, "Error: Please launch the game with the Game UI.\n");
         return EXIT_FAILURE;
     }
 
