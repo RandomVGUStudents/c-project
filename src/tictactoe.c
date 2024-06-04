@@ -30,10 +30,30 @@ void initGame() {
     thickness = cellSize * TOTAL_THICKNESS;
 }
 
+/**
+ * Set the board with the current player.
+ *
+ * The function sets the board with the current player and changes the player.
+ *
+ * @param x Coordinate x
+ * @param y Coordinate y
+ *
+ */
+
 void setBoard(int x, int y) {
     board[y * sizeX + x] = currentTurn;
     currentTurn = -currentTurn;
 }
+
+/**
+ * Draw the player in the cell. It will draw X or O.
+ *
+ * @param player The player to draw
+ * @param x Coordinate x
+ * @param y Coordinate y
+ * @param hover If the cell is hovered
+ *
+ */
 
 void draw(Cell player, int x, int y, int hover) {
     if (player == X) {
@@ -65,6 +85,13 @@ void draw(Cell player, int x, int y, int hover) {
     }
 }
 
+/**
+ * Draw the current state of the board.
+ *
+ * Draw the whole board with the current state of the game.
+ *
+ */
+
 void drawState() {
     for (int i = 0; i < sizeX; i++) {
         for (int j = 0; j < sizeY; j++) {
@@ -94,6 +121,17 @@ int drawResult(Cell winner) {
     DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height}, TEXT_SIZE, window.fg);
     return 0;
 }
+
+/**
+ * Check if the player is winning.
+ *
+ * Check if the player is winning in the current state of the board. It checks
+ * for horizontal, vertical and diagonal wins.
+ *
+ * @param player The player to check
+ * @return If the player is winning
+ *
+ */
 
 bool areYouWinningSon(Cell player) {
     for (int i = 0; i < sizeX; i++) {
@@ -160,6 +198,8 @@ int gameState() {
 
     return DRAW;
 }
+
+// Handle some input
 void Update(void) {
     if (gameState() != ONGOING) {
         gameOver = true;
@@ -176,6 +216,7 @@ void Update(void) {
     }
 }
 
+// Draw the icon when the mouse is hovering
 void Draw(void) {
     for (int i = 1; i < sizeX; i++) {
         DrawRectangle(i * cellSize - (thickness >> 1), 0, thickness, window.height, window.fg);
