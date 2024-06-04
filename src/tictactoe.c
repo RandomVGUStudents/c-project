@@ -212,7 +212,7 @@ void tictactoe(int x, int y, int size) {
     sizeX = x;
     sizeY = y;
     inARow = size;
-    cellSize = -max(-MAX_WINDOW_SIZE, -GetScreenHeight()) / max(sizeX, sizeY);
+    cellSize = MAX_WINDOW_SIZE / max(sizeX, sizeY);
     window.width = sizeX * cellSize;
     window.height = sizeY * cellSize;
     newGameWindow(&window, initGame, Update, Draw, DeInit);

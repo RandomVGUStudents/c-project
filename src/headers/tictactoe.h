@@ -10,7 +10,7 @@
 #define X_COLOR MAROON
 #define O_COLOR SKYBLUE
 #define TEXT_SIZE 100
-#define MAX_WINDOW_SIZE 1000
+#define MAX_WINDOW_SIZE 700
 
 typedef enum {
     X = 1,
