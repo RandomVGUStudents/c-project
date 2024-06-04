@@ -1,4 +1,4 @@
-#include "tictactoe.h"
+#include "headers/tictactoe.h"
 
 struct WindowAttr window = {
     .title = "Tic Tac Toe",

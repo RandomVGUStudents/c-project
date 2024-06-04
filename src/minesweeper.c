@@ -1,5 +1,4 @@
-#include "minesweeper.h"
-#include <raylib.h>
+#include "headers/minesweeper.h"
 
 Texture2D unopened_tile;
 Texture2D opened_tile;
@@ -211,17 +210,17 @@ void Init() {
     InitAudioDevice();
 
     // Load all textures and sounds
-    unopened_tile = LoadTexture("assets/unopened.png");
-    opened_tile = LoadTexture("assets/opened.png");
-    flagged_tile = LoadTexture("assets/flagged.png");
-    mine_tile = LoadTexture("assets/bomb.png");
-    gojo_default = LoadTexture("assets/gojo_default_small.png");
-    gojo_win = LoadTexture("assets/gojo_win_small.png");
-    gojo_lose = LoadTexture("assets/gojo_lose_small.png");
-    logo = LoadTexture("assets/logo_official.png");
-    bgm = LoadMusicStream("audio/New Tim Follin Song 2021.mp3");
-    victory = LoadSound("audio/snd_dumbvictory.wav");
-    death = LoadSound("audio/snd_damage.wav");
+    unopened_tile = LoadTexture("assets/images/unopened.png");
+    opened_tile = LoadTexture("assets/images/opened.png");
+    flagged_tile = LoadTexture("assets/images/flagged.png");
+    mine_tile = LoadTexture("assets/images/bomb.png");
+    gojo_default = LoadTexture("assets/images/gojo_default_small.png");
+    gojo_win = LoadTexture("assets/images/gojo_win_small.png");
+    gojo_lose = LoadTexture("assets/images/gojo_lose_small.png");
+    logo = LoadTexture("assets/images/logo_official.png");
+    bgm = LoadMusicStream("assets/audios/New Tim Follin Song 2021.mp3");
+    victory = LoadSound("assets/audios/snd_dumbvictory.wav");
+    death = LoadSound("assets/audios/snd_damage.wav");
     status = menu;
     
     PlayMusicStream(bgm); 

@@ -1,4 +1,5 @@
-#include "main.h"
+#include "headers/gameui.h"
+#include <raylib.h>
 
 Texture2D TicTacToe;
 Texture2D Minesweeper;
@@ -9,17 +10,16 @@ bool inBounds = false;
 GameType selectedGame = GAME_NONE;
 int setX = SLIDER.x, setY = SLIDER.y;
 int mineRatio = 0;
-int winCondition = 0;
-int frames = 0;
+int winCondition = 3;
 
 void TextureInit() {
-    TicTacToe = LoadTexture("assets/tictactoe.png");
+    TicTacToe = LoadTexture("assets/images/tictactoe.png");
     if (TicTacToe.id == 0) {
         fprintf(stderr, "Failed to load TicTacToe texture\n");
         exit(EXIT_FAILURE);
     }
 
-    Minesweeper = LoadTexture("assets/minesweeper.png");
+    Minesweeper = LoadTexture("assets/images/minesweeper.png");
     if (Minesweeper.id == 0) {
         fprintf(stderr, "Failed to load Minesweeper texture\n");
         exit(EXIT_FAILURE);
@@ -38,19 +38,15 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
     DrawRectangleLinesEx(unlocked ? SLIDER : sliderX, 5.0, BLACK);
     DrawRectangleLinesEx(BACK_BTN, 5.0, BLACK);
     DrawRectangleRec(START_BTN, BLACK);
+    DrawRectangleRec(INC_BTN, BLACK);
+    DrawRectangleLinesEx(DEC_BTN, 5.0, BLACK);
     DrawTextCentered("Game Settings", TEXTBOX, 80, BLACK);
     DrawTextCentered("Board size", SIZE_TEXTBOX, 40, BLACK);
     DrawTextCentered("Back", BACK_BTN, 20, BLACK);
     DrawTextCentered("Start Game", START_BTN, 20, RAYWHITE);
+    DrawTextCentered("+", INC_BTN, 20, RAYWHITE);
+    DrawTextCentered("-", DEC_BTN, 20, BLACK);
     DrawRectangle(setX, unlocked ? setY : SLIDER.y, SLIDER_HANDLE_SIZE, SLIDER_HANDLE_SIZE, BLACK);
-
-    if (CheckCollisionPointRec(mouse, BACK_BTN)) {
-        DrawRectangleRec(BACK_BTN, Fade(BLACK, 0.5));
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            selectedGame = GAME_NONE;
-            popUp = false;
-        }
-    }
 
     if (!unlocked) {
         if (CheckCollisionPointRec(mouse, allowedArea))
@@ -77,19 +73,47 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
     }
 
     if (selectedGame == GAME_MINESWEEPER) {
-        if (frames % 10 == 0) {
-            mineRatio = GetRandomValue(10, 40);
-            frames = 0;
+        if (CheckCollisionPointRec(mouse, INC_BTN)) {
+            DrawRectangleRec(INC_BTN, Fade(RAYWHITE, 0.5));
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                mineRatio = clamp(mineRatio + 5, 0, 100);
+            }
         }
 
-        frames++;
+        if (CheckCollisionPointRec(mouse, DEC_BTN)) {
+            DrawRectangleRec(DEC_BTN, Fade(BLACK, 0.5));
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                mineRatio = clamp(mineRatio - 5, 0, 100);
+            }
+        }
 
         DrawTextCentered("Mine ratio", MINE_TEXTBOX, 40, BLACK);
         DrawTextCentered(TextFormat("%d", mineRatio), MINE_TEXTBOX2, 80, BLACK);
     } else {
-        winCondition = (int) clamp(max(xValue, yValue) / 1.5, 3, 5);
+        if (CheckCollisionPointRec(mouse, INC_BTN)) {
+            DrawRectangleRec(INC_BTN, Fade(RAYWHITE, 0.5));
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                winCondition = clamp(winCondition + 1, 3, 6);
+            }
+        }
+
+        if (CheckCollisionPointRec(mouse, DEC_BTN)) {
+            DrawRectangleRec(DEC_BTN, Fade(BLACK, 0.5));
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                winCondition = clamp(winCondition - 1, 3, 6);
+            }
+        }
+
         DrawTextCentered("To win", MINE_TEXTBOX, 40, BLACK);
         DrawTextCentered(TextFormat("%d", winCondition), MINE_TEXTBOX2, 80, BLACK);
+    }
+
+    if (CheckCollisionPointRec(mouse, BACK_BTN)) {
+        DrawRectangleRec(BACK_BTN, Fade(BLACK, 0.5));
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            selectedGame = GAME_NONE;
+            popUp = false;
+        }
     }
 
     if (CheckCollisionPointRec(mouse, START_BTN)) {

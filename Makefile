@@ -1,61 +1,30 @@
-# Project names
-PROJECT_NAME_UI = ui
-PROJECT_NAME_MINESWEEPER = minesweeper
-PROJECT_NAME_TICTACTOE = tictactoe
+SRC_PATH = src
+HEADER_PATH = src/headers
+PROJECTS = minesweeper tictactoe gameui
+UTIL = myUtils
 
-# Source files
-SRC_FILES_UI = \
-			src/main.c
+# Project header files
+HDR_FILES = $(HEADER_PATH)/$(UTIL).h \
+            $(foreach proj,$(PROJECTS),$(HEADER_PATH)/$(proj).h)
 
-SRC_FILES_MINESWEEPER = \
-			src/minesweeper/minesweeper.c
-
-SRC_FILES_TICTACTOE = \
-			src/tictactoe/tictactoe.c
-
-# Utility source files
-UTIL_FILES = \
-			src/utils/myUtils.c
-
-# Header files
-INC_FILES = \
-			src/utils/myUtils.h \
-			src/minesweeper/minesweeper.h \
-			src/tictactoe/tictactoe.h \
-			src/main.h
+# Object files
+OBJ_FILES = $(SRC_PATH)/$(UTIL).o \
+            $(foreach proj,$(PROJECTS),$(SRC_PATH)/$(proj).o)
 
 # Compiler flags
 CFLAGS = -Wall -Wextra -std=c11 -lraylib -lm
 
-# Object files
-OBJ_FILES_UI = $(SRC_FILES_UI:.c=.o)
-OBJ_FILES_MINESWEEPER = $(SRC_FILES_MINESWEEPER:.c=.o)
-OBJ_FILES_TICTACTOE = $(SRC_FILES_TICTACTOE:.c=.o)
-OBJ_FILES_UTIL = $(UTIL_FILES:.c=.o)
+all: $(PROJECTS)
 
-# Executable files
-EXECUTABLE_UI = $(PROJECT_NAME_UI)
-EXECUTABLE_MINESWEEPER = $(PROJECT_NAME_MINESWEEPER)
-EXECUTABLE_TICTACTOE = $(PROJECT_NAME_TICTACTOE)
+# Rule to build each project executable
+$(PROJECTS): %: $(SRC_PATH)/%.o $(SRC_PATH)/$(UTIL).o
+	$(CC) $(CFLAGS) -g -o $@ $^
 
-# Targets
-all: $(EXECUTABLE_UI) $(EXECUTABLE_MINESWEEPER) $(EXECUTABLE_TICTACTOE)
-
-$(EXECUTABLE_UI): $(OBJ_FILES_UI) $(OBJ_FILES_UTIL)
-	$(CC) $(CFLAGS) -g -o $@ $^ $(LDLIBS)
-
-$(EXECUTABLE_MINESWEEPER): $(OBJ_FILES_MINESWEEPER) $(OBJ_FILES_UTIL)
-	$(CC) $(CFLAGS) -g -o $@ $^ $(LDLIBS)
-
-$(EXECUTABLE_TICTACTOE): $(OBJ_FILES_TICTACTOE) $(OBJ_FILES_UTIL)
-	$(CC) $(CFLAGS) -g -o $@ $^ $(LDLIBS)
-
-%.o: %.c $(INC_FILES)
+# Rule to build object files
+$(SRC_PATH)/%.o: $(SRC_PATH)/%.c $(HDR_FILES)
 	$(CC) $(CFLAGS) -g -c -o $@ $<
 
 clean:
-	rm -f $(OBJ_FILES_UI) $(OBJ_FILES_MINESWEEPER) $(OBJ_FILES_TICTACTOE) \
-	$(OBJ_FILES_UTIL) $(EXECUTABLE_UI) $(EXECUTABLE_MINESWEEPER) $(EXECUTABLE_TICTACTOE)
+	rm -f $(PROJECTS) $(OBJ_FILES)
 
 .PHONY: all clean
-

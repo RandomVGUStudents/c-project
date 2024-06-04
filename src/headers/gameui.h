@@ -1,4 +1,4 @@
-#include "utils/myUtils.h"
+#include "myUtils.h"
 #include <raylib.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -21,7 +21,9 @@ const Rectangle TEXTBOX = {0, 60, 800, 80};
 const Rectangle SIZE_TEXTBOX = {550, 200, 200, 40};
 const Rectangle SIZE_TEXTBOX2 = {550, 250, 200, 30};
 const Rectangle MINE_TEXTBOX = {550, 300, 200, 40};
-const Rectangle MINE_TEXTBOX2 = {550, 350, 200, 80};
+const Rectangle MINE_TEXTBOX2 = {530, 350, 200, 80};
+const Rectangle INC_BTN = {700, 350, 30, 30};
+const Rectangle DEC_BTN = {700, 390, 30, 30};
 
 extern const Rectangle SLIDER;
 extern const Rectangle BACK_BTN;

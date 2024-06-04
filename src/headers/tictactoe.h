@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <raylib.h>
-#include "../utils/myUtils.h"
+#include "myUtils.h"
 
 #define TOTAL_THICKNESS 0.05
 #define TOTAL_PADDING 0.15
