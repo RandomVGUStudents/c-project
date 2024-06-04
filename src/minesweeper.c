@@ -76,9 +76,13 @@ void draw_grid() {
     ClearBackground((Color){235, 235, 235, 255});
     Rectangle total_mine = {(window.width + GOJO_SIZE) / 2.0 + BORDER_SIZE,
         row * CELL_SIZE, (window.width - GOJO_SIZE) / 2.0 - BORDER_SIZE, GOJO_SIZE / 2.0 + BORDER_SIZE};
-    DrawTextCentered(TextFormat("Total mines: %d", mine_count), total_mine, 30, BLACK); //TODO
+    DrawTextCentered(TextFormat("Total mines: %d", mine_count), total_mine, 30, BLACK);
     Rectangle flagged_count = {total_mine.x, total_mine.y + total_mine.height, total_mine.width, total_mine.height};
-    DrawTextCentered(TextFormat("Flagged count: %d", flagged), flagged_count, 30, BLACK); //TODO
+    DrawTextCentered(TextFormat("Flagged count: %d", flagged), flagged_count, 30, BLACK);
+    Rectangle tip1 = {0, row * CELL_SIZE, (window.width - GOJO_SIZE) / 2.0 - BORDER_SIZE, GOJO_SIZE / 2.0 + BORDER_SIZE};
+    DrawTextCentered("Right click: Flag", tip1, 30, BLACK);
+    Rectangle tip2 = {tip1.x, tip1.y + tip1.height, tip1.width, tip1.height};
+    DrawTextCentered("Press M: Mute", tip2, 30, BLACK);
 
     for (int i = 0; i < row; i++) {
         for (int j = 0; j < column; j++) {
@@ -318,7 +322,7 @@ void minesweeper(int r, int c, int m)
 int main(int argc, char** argv) {
 
     if (argc != 4) {
-        fprintf(stderr, "Error: Please launch the game with the Game Selector UI.\n");
+        fprintf(stderr, "Error: Please launch the game with the Game UI.\n");
         return EXIT_FAILURE;
     }
 

@@ -1,0 +1,30 @@
+name: C/C++ CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: make
+      run: ./make.ps1
+
+    - name: Configure Git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Add build artifacts
+      run: |
+        git add .
+        git commit -m 'Update premade library'
+    
+    - name: Push changes
+      run: git push
+      env:
+        # This ensures the token is available to push the changes
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
