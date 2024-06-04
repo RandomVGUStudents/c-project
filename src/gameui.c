@@ -120,10 +120,12 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             switch (selectedGame) {
                 case GAME_MINESWEEPER:
-                    system(TextFormat("%s %d %d %d", EXEPATH("minesweeper") , xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
+                    system(TextFormat("%s %d %d %d", EXEPATH("minesweeper"),
+                                xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
                     break;
                 case GAME_TICTACTOE:
-                    system(TextFormat("%s %d %d %d", EXEPATH("tictactoe"), xValue, yValue, winCondition));
+                    system(TextFormat("%s %d %d %d", EXEPATH("tictactoe"),
+                                xValue, yValue, winCondition));
                     break;
                 default:
                     break;
@@ -178,7 +180,7 @@ int main() {
     struct WindowAttr window = {
         .title = "Game Selector",
         .width = 800,
-        .height = 800,
+        .height = 750,
         .fps = 60,
         .bg = RAYWHITE,
         .fg = BLACK
@@ -188,4 +190,3 @@ int main() {
 
     return 0;
 }
-

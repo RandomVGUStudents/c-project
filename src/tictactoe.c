@@ -118,7 +118,8 @@ int drawResult(Cell winner) {
             break;
     }
 
-    DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height}, TEXT_SIZE, window.fg);
+    DrawTextCentered(text, (Rectangle) {0, 0, window.width, window.height - 100}, TEXT_SIZE, window.fg);
+    DrawTextCentered("Press R for Restart, ESC to quit", (Rectangle) {0, 0, window.width, window.height + 100}, TEXT_SIZE, window.fg);
     return 0;
 }
 

@@ -1,10 +1,19 @@
 # Minesweeper & Tic Tac Toe (and beyond)
-## How to play
+## How to get
+### Windows
 
 1. Click the green button "<> Code"
 2. Click "Download ZIP"
 3. Extract zip file and run `gameui.exe`
 4. A small (weird) surprise awaits you in the UI (size slider)
+
+### Linux
+
+```bash
+git clone https://github.com/RandomVGUStudents/c-project.git
+cd c-project
+make && ./gameui
+```
 
 ## 3D Animation
 
