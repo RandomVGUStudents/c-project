@@ -5,11 +5,11 @@
 #include <stdio.h>
 
 #ifdef _WIN32
-#define ExePath(name) (TextFormat(".\\%s.exe", name)
+#define EXEPATH(name) (TextFormat(".\\%s.exe", name))
 #endif
 
-#ifdef linux
-#define ExePath(name) (TextFormat("./%s", name))
+#ifdef __linux__
+#define EXEPATH(name) (TextFormat("./%s", name))
 #endif
 
 #define SLIDER_HANDLE_SIZE 20

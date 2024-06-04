@@ -120,10 +120,10 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             switch (selectedGame) {
                 case GAME_MINESWEEPER:
-                    system(TextFormat("%s %d %d %d", ExePath("minesweeper") , xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
+                    system(TextFormat("%s %d %d %d", EXEPATH("minesweeper") , xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
                     break;
                 case GAME_TICTACTOE:
-                    system(TextFormat("%s %d %d %d", ExePath("tictactoe"), xValue, yValue, winCondition));
+                    system(TextFormat("%s %d %d %d", EXEPATH("tictactoe"), xValue, yValue, winCondition));
                     break;
                 default:
                     break;
