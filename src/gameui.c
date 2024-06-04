@@ -1,5 +1,4 @@
 #include "headers/gameui.h"
-#include <raylib.h>
 
 Texture2D TicTacToe;
 Texture2D Minesweeper;
@@ -121,10 +120,10 @@ void DrawSettingsPopup(Vector2 mouse, int maxSize, int minSize) {
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
             switch (selectedGame) {
                 case GAME_MINESWEEPER:
-                    system(TextFormat("./minesweeper %d %d %d", xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
+                    system(TextFormat("%s %d %d %d", ExePath("minesweeper") , xValue, yValue, (int) (mineRatio * xValue * yValue * 0.01)));
                     break;
                 case GAME_TICTACTOE:
-                    system(TextFormat("./tictactoe %d %d %d", xValue, yValue, winCondition));
+                    system(TextFormat("%s %d %d %d", ExePath("tictactoe"), xValue, yValue, winCondition));
                     break;
                 default:
                     break;

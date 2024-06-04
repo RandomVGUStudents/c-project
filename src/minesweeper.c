@@ -68,6 +68,8 @@ void init_grid() { //initialize the grid
             }
         }
     }
+
+    flagged = 0;
 }
 
 void draw_grid() {
