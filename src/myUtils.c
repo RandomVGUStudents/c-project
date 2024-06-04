@@ -1,4 +1,4 @@
-#include "myUtils.h"
+#include "headers/myUtils.h"
 
 int max(int a, int b) {
     return a > b ? a : b;
@@ -32,6 +32,11 @@ int newGameWindow(struct WindowAttr *window, void (*Init)(void), void (*Update)(
 }
 
 void DrawTextCentered(const char *text, Rectangle rec, int fontSize, Color color) {
-    Vector2 textPos = { rec.x + rec.width / 2.0f - MeasureText(text, fontSize) / 2.0f, rec.y + rec.height / 2.0f - 10 };
+    int textWidth = MeasureText(text, fontSize);
+    while (textWidth + 5 > rec.width || fontSize > rec.height) {
+        fontSize--;
+        textWidth = MeasureText(text, fontSize);
+    }
+    Vector2 textPos = { rec.x + rec.width / 2.0 - textWidth / 2.0, rec.y + (rec.height - fontSize) / 2.0 };
     DrawText(text, textPos.x, textPos.y, fontSize, color);
 }
