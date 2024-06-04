@@ -4,6 +4,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+#define EXEPATH(name) (TextFormat(".\\%s.exe", name))
+#endif
+
+#ifdef __linux__
+#define EXEPATH(name) (TextFormat("./%s", name))
+#endif
+
 #define SLIDER_HANDLE_SIZE 20
 
 typedef enum {
