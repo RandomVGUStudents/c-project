@@ -32,9 +32,3 @@ const Rectangle MINE_TEXTBOX = {550, 300, 200, 40};
 const Rectangle MINE_TEXTBOX2 = {530, 350, 200, 80};
 const Rectangle INC_BTN = {700, 350, 30, 30};
 const Rectangle DEC_BTN = {700, 390, 30, 30};
-
-extern const Rectangle SLIDER;
-extern const Rectangle BACK_BTN;
-extern const Rectangle START_BTN;
-extern const Rectangle ICON1;
-extern const Rectangle ICON2;
