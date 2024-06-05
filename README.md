@@ -21,6 +21,14 @@ I made a 3D animation for no reason.
 
 [![YouTube](http://i.ytimg.com/vi/XOAA-efwiso/hqdefault.jpg)](https://www.youtube.com/watch?v=XOAA-efwiso)
 
+## Screenshots
+
+![Screenshot](assets/screenshots/screenshot1.png)
+![Screenshot](assets/screenshots/screenshot2.png)
+![Screenshot](assets/screenshots/screenshot3.png)
+![Screenshot](assets/screenshots/screenshot4.png)
+![Screenshot](assets/screenshots/screenshot5.png)
+
 ## More information
 
 ### Team members
