@@ -23,11 +23,48 @@ I made a 3D animation for no reason.
 
 ## Screenshots
 
+<table>
+<tr>
+<th>Main screen</th>
+<th>Minesweeper settings</th>
+<th>Tic Tac Toe settings</th>
+</tr>
+
+<td>
+
 ![Screenshot](assets/screenshots/screenshot1.png)
+
+</td>
+<td>
+
 ![Screenshot](assets/screenshots/screenshot2.png)
+
+</td>
+<td>
+
 ![Screenshot](assets/screenshots/screenshot3.png)
+
+</td>
+
+</table>
+<table>
+<tr>
+<th>Minesweeper</th>
+<th>Tic Tac Toe</th>
+</tr>
+
+<td>
+
 ![Screenshot](assets/screenshots/screenshot4.png)
+
+</td>
+<td>
+
 ![Screenshot](assets/screenshots/screenshot5.png)
+
+</td>
+
+</table>
 
 ## More information
 
